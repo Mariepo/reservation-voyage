@@ -24,11 +24,11 @@
     <div>
         <input type="submit" value="Ajouter">
     </div>
-</form>
-<div>
+    <div>
         <button onclick="redirectToIndexDestination()">Annuler</button>
-</div>
+    </div>
 
+</form>
 <script>
     function redirectToIndexDestination(){
         window.location.replace("../../controllers/admin/destinations-controller.php");
