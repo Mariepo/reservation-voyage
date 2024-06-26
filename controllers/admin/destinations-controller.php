@@ -26,8 +26,8 @@ else if($_GET["action"] == "insert"){
             $disponibilite =  0;
         };
         insertDestination($nom, $description, $prix, $disponibilite);
-        header("Location: destinations-controller.php?create=success");
     }
+    header("Location: destinations-controller.php?create=success");
 } 
 
 else if($_GET["action"] == "edit"){
@@ -48,5 +48,34 @@ else if($_GET["action"] == "update"){
     };
     updateDestination($id_destination, $nom, $description, $prix, $disponibilite);
     header("Location: destinations-controller.php?update=success");
-};
+} 
 
+// else if ($_GET["action"] == "delete"){
+//     $id_destination = htmlspecialchars($_GET["id_destination"]);
+//     $destinations = fetchDestinations();
+//     include "../../views/admin/destinations/index.php";
+// };
+
+
+
+
+// Success handler
+// Si ajout de destination
+function displayCreateSuccessBanner(){
+    if (isset($_GET["create"]) && $_GET["create"] == "success") {
+        echo '<div style="background-color: green; padding: 12px" class="banner">';
+            echo '<span style="color:white;">Destination ajoutée avec succès !</span>';
+            echo '<button class="close-btn" onclick=\'closeElement(".banner")\'>X</button>';
+        echo '</div>';
+    }
+}; 
+
+// Si modification de destination
+function displayUpdateSuccessBanner(){
+    if(isset($_GET["update"]) && $_GET["update"] == "success"){
+        echo '<div style="background-color: green; padding: 12px" class="banner">';
+            echo '<span style="color:white;">Destination modifiée avec succès !</span>';
+            echo '<button class="close-btn" onclick=\'closeElement(".banner")\'>X</button>';
+        echo '</div>'; 
+    }
+};
