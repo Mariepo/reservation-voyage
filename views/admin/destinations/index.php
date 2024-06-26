@@ -1,6 +1,7 @@
 <?php
 displayCreateSuccessBanner();
 displayUpdateSuccessBanner();
+displayDeleteSuccessBanner();
 ?>
 
 
@@ -30,8 +31,7 @@ displayUpdateSuccessBanner();
                         echo "<td>" . htmlspecialchars($destination["prix"]) . "</td>";
                         echo "<td>";
                         echo "<button onclick='redirectToEditDestination(" . htmlspecialchars($destination['id_destination']) .")'>Modifier</button>";
-                        echo "<button onclick='displayDeleteDestinationModal()'>Supprimer</button>";
-                        // echo "<button onclick='redirectToDeleteDestination(" . htmlspecialchars($destination["id_destination"]) .")'>Supprimer</button>";
+                        echo "<button onclick='redirectToDeleteDestination(" . htmlspecialchars($destination["id_destination"]) .")'>Supprimer</button>";
                         echo "</td>";
                     echo "</tr>";
                 };
@@ -51,10 +51,10 @@ displayUpdateSuccessBanner();
         window.location.replace(`../../controllers/admin/destinations-controller.php?action=delete&id_destination=${id_destination}`);
     }
     function closeElement(element){
-        console.log("hello");
         const componentToClose = document.querySelector(element);
         const closeButton = document.querySelector(".close-btn");
         componentToClose.style.display = "none";
+        window.location.replace("../../controllers/admin/destinations-controller.php");
     }
 
 </script>

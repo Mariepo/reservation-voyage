@@ -8,13 +8,9 @@ if(!isset($_GET["action"])){
     // Fetcher les destinations de la BDD (bdd = model) et les stocker dans le tableau destination pour l'afficher via un foreach plus tard
     $destinations = fetchDestinations();
     include "../../views/admin/destinations/index.php";
-} 
-
-else if($_GET["action"] == "create"){
+} else if($_GET["action"] == "create"){
     include "../../views/admin/destinations/create.php";
-} 
-
-else if($_GET["action"] == "insert"){
+} else if($_GET["action"] == "insert"){
     if(isset($_POST["nom"], $_POST["description"], $_POST["prix"], $_POST["disponibilite"])){
         $nom = htmlspecialchars($_POST["nom"]);
         $description = htmlspecialchars($_POST["description"]);
@@ -28,15 +24,11 @@ else if($_GET["action"] == "insert"){
         insertDestination($nom, $description, $prix, $disponibilite);
     }
     header("Location: destinations-controller.php?create=success");
-} 
-
-else if($_GET["action"] == "edit"){
+} else if($_GET["action"] == "edit"){
     $id_destination = htmlspecialchars($_GET["id_destination"]);
     $destination = fetchDestinationById($id_destination);
     include "../../views/admin/destinations/edit.php";
-} 
-
-else if($_GET["action"] == "update"){
+} else if($_GET["action"] == "update"){
     $id_destination = htmlspecialchars($_POST["id_destination"]);
     $nom = htmlspecialchars($_POST["nom"]);
     $description = htmlspecialchars($_POST["description"]);
@@ -48,13 +40,15 @@ else if($_GET["action"] == "update"){
     };
     updateDestination($id_destination, $nom, $description, $prix, $disponibilite);
     header("Location: destinations-controller.php?update=success");
-} 
-
-// else if ($_GET["action"] == "delete"){
-//     $id_destination = htmlspecialchars($_GET["id_destination"]);
-//     $destinations = fetchDestinations();
-//     include "../../views/admin/destinations/index.php";
-// };
+} else if($_GET["action"] == "delete"){
+    $id_destination = htmlspecialchars($_GET["id_destination"]);
+    $destination = fetchDestinationById($id_destination);
+    include "../../views/admin/destinations/delete.php";
+} else if($_GET["action"] == "confirmDelete"){
+    $id_destination = htmlspecialchars($_POST["id_destination"]);
+    deleteDestination($id_destination);
+    header("Location: destinations-controller.php");
+};
 
 
 
@@ -69,7 +63,6 @@ function displayCreateSuccessBanner(){
         echo '</div>';
     }
 }; 
-
 // Si modification de destination
 function displayUpdateSuccessBanner(){
     if(isset($_GET["update"]) && $_GET["update"] == "success"){
@@ -79,3 +72,4 @@ function displayUpdateSuccessBanner(){
         echo '</div>'; 
     }
 };
+

@@ -33,3 +33,10 @@ function updateDestination($id_destination, $nom, $description, $prix, $disponib
     $stmt = $pdo->prepare($query);
     $stmt->execute([$nom, $description, $prix, $disponibilite, $id_destination]);
 };
+
+function deleteDestination($id_destination){
+    global $pdo;
+    $query = "DELETE FROM destination WHERE id_destination = ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$id_destination]);
+};
