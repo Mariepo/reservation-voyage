@@ -1,21 +1,8 @@
-
 <?php
-    // Si ajout de destination
-    if (isset($_GET["create"]) && $_GET["create"] == "success") {
-        echo '<div style="background-color: green; padding: 12px" class="banner">';
-            echo '<span style="color:white;">Destination ajoutée avec succès !</span>';
-            echo '<button class="close-btn">X</button>';
-        echo '</div>';
-    }; 
-
-    // Si modification de destination
-    if(isset($_GET["update"]) && $_GET["update"] == "success"){
-        echo '<div style="background-color: green; padding: 12px" class="banner">';
-            echo '<span style="color:white;">Destination modifiée avec succès !</span>';
-            echo '<button class="close-btn">X</button>';
-        echo '</div>'; 
-    };
+displayCreateSuccessBanner();
+displayUpdateSuccessBanner();
 ?>
+
 
 <main>
     <button style="background-color: lightblue;">Destinations</button>
@@ -43,7 +30,8 @@
                         echo "<td>" . htmlspecialchars($destination["prix"]) . "</td>";
                         echo "<td>";
                         echo "<button onclick='redirectToEditDestination(" . htmlspecialchars($destination['id_destination']) .")'>Modifier</button>";
-                        echo "<button>Supprimer</button>";
+                        echo "<button onclick='displayDeleteDestinationModal()'>Supprimer</button>";
+                        // echo "<button onclick='redirectToDeleteDestination(" . htmlspecialchars($destination["id_destination"]) .")'>Supprimer</button>";
                         echo "</td>";
                     echo "</tr>";
                 };
@@ -59,14 +47,14 @@
     function redirectToEditDestination(id_destination){
         window.location.replace(`../../controllers/admin/destinations-controller.php?action=edit&id_destination=${id_destination}`);
     }
-    function closeBanner(){
-        const banner = document.querySelector(".banner");
-        const closeBtn = document.querySelector(".close-btn");
-        if(banner) {
-            closeBtn.addEventListener("click", function(){
-                banner.style.display = "none";
-            })
-        }
+    function redirectToDeleteDestination(id_destination){
+        window.location.replace(`../../controllers/admin/destinations-controller.php?action=delete&id_destination=${id_destination}`);
     }
-    closeBanner();
+    function closeElement(element){
+        console.log("hello");
+        const componentToClose = document.querySelector(element);
+        const closeButton = document.querySelector(".close-btn");
+        componentToClose.style.display = "none";
+    }
+
 </script>
