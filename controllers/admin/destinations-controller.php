@@ -8,9 +8,13 @@ if(!isset($_GET["action"])){
     // Fetcher les destinations de la BDD (bdd = model) et les stocker dans le tableau destination pour l'afficher via un foreach plus tard
     $destinations = fetchDestinations();
     include "../../views/admin/destinations/index.php";
-} else if($_GET["action"] == "create"){
+} 
+
+else if($_GET["action"] == "create"){
     include "../../views/admin/destinations/create.php";
-} else if($_GET["action"] == "insert"){
+} 
+
+else if($_GET["action"] == "insert"){
     if(isset($_POST["nom"], $_POST["description"], $_POST["prix"], $_POST["disponibilite"])){
         $nom = htmlspecialchars($_POST["nom"]);
         $description = htmlspecialchars($_POST["description"]);
@@ -22,7 +26,27 @@ if(!isset($_GET["action"])){
             $disponibilite =  0;
         };
         insertDestination($nom, $description, $prix, $disponibilite);
+        header("Location: destinations-controller.php?create=success");
     }
-    header("Location: destinations-controller.php");
+} 
+
+else if($_GET["action"] == "edit"){
+    $id_destination = htmlspecialchars($_GET["id_destination"]);
+    $destination = fetchDestinationById($id_destination);
+    include "../../views/admin/destinations/edit.php";
+} 
+
+else if($_GET["action"] == "update"){
+    $id_destination = htmlspecialchars($_POST["id_destination"]);
+    $nom = htmlspecialchars($_POST["nom"]);
+    $description = htmlspecialchars($_POST["description"]);
+    $prix = htmlspecialchars($_POST["prix"]);
+    if(htmlspecialchars($_POST["disponibilite"]) == true){
+        $disponibilite = 1;
+    } else {
+        $disponibilite = 0;
+    };
+    updateDestination($id_destination, $nom, $description, $prix, $disponibilite);
+    header("Location: destinations-controller.php?update=success");
 };
 
