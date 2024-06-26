@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évadez-vous vers des destinations de rêve.</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Évadez-vous vers des destinations de rêve</h1>
+    </header>
+    <main>
+        <button onclick="redirectToClient()">Je suis un client</button>
+        <button onclick="redirectToAdmin()">Je suis un admin</button>
+    </main>
+    <footer></footer>
+</body>
+</html>
+
+<script>
+    function redirectToAdmin(){
+        window.location.replace("./controllers/admin/destinations-controller.php");
+    }
+    function redirectToClient(){
+        window.location.replace("./controllers/client/destinations-controller.php");
+    }
+</script>
