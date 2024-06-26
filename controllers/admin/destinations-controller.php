@@ -47,7 +47,7 @@ if(!isset($_GET["action"])){
 } else if($_GET["action"] == "confirmDelete"){
     $id_destination = htmlspecialchars($_POST["id_destination"]);
     deleteDestination($id_destination);
-    header("Location: destinations-controller.php");
+    header("Location: destinations-controller.php?delete=success");
 };
 
 
@@ -72,4 +72,12 @@ function displayUpdateSuccessBanner(){
         echo '</div>'; 
     }
 };
-
+// Si suppression de destination
+function displayDeleteSuccessBanner(){
+    if(isset($_GET["delete"]) && $_GET["delete"] == "success"){
+        echo '<div style="background-color: green; padding: 12px" class="banner">';
+            echo '<span style="color:white;">Destination supprimée avec succès !</span>';
+            echo '<button class="close-btn" onclick=\'closeElement(".banner")\'>X</button>';
+        echo '</div>'; 
+    }
+};
