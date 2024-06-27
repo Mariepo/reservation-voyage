@@ -37,9 +37,7 @@ else if($_GET["action"] == "create"){
         $id_destination = $pdo->lastInsertId();
         
         // Insérer dans la table appartenir uniquement si une catégorie est sélectionnée
-        if ($id_categorie !== null) {
-            insertIntoAppartenir($id_destination, $id_categorie);
-        }
+        insertIntoAppartenir($id_destination, $id_categorie);
 
     }
     header("Location: destinations-controller.php?create=success");
