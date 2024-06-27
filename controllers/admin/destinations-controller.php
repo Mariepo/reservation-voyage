@@ -40,10 +40,6 @@ if(!isset($_GET["action"])){
     };
     updateDestination($id_destination, $nom, $description, $prix, $disponibilite);
     header("Location: destinations-controller.php?update=success");
-} else if($_GET["action"] == "delete"){
-    $id_destination = htmlspecialchars($_GET["id_destination"]);
-    $destination = fetchDestinationById($id_destination);
-    include "../../views/admin/destinations/delete.php";
 } else if($_GET["action"] == "confirmDelete"){
     $id_destination = htmlspecialchars($_POST["id_destination"]);
     deleteDestination($id_destination);
