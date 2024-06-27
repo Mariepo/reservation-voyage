@@ -7,40 +7,64 @@ require_once "../../models/admin/destinations-model.php";
 if(!isset($_GET["action"])){
     // Fetcher les destinations de la BDD (bdd = model) et les stocker dans le tableau destination pour l'afficher via un foreach plus tard
     $destinations = fetchDestinations();
+    $destinationCategories = [];
+    foreach ($destinations as $destination) {
+        $destinationCategories[$destination['id_destination']] = fetchCategoriesForDestination($destination['id_destination']);
+    }
     include "../../views/admin/destinations/index.php";
-} else if($_GET["action"] == "create"){
+} 
+// CREER des destinations
+else if($_GET["action"] == "create"){
+    $categories = fetchCategories();
     include "../../views/admin/destinations/create.php";
 } else if($_GET["action"] == "insert"){
-    if(isset($_POST["nom"], $_POST["description"], $_POST["prix"], $_POST["disponibilite"])){
+    if(isset($_POST["nom"], $_POST["description"], $_POST["prix"])){
         $nom = htmlspecialchars($_POST["nom"]);
         $description = htmlspecialchars($_POST["description"]);
-        $prix = htmlspecialchars($_POST["prix"]);
-        // convertir disponibilite en boolean
-        if(htmlspecialchars($_POST["disponibilite"] == "true")){
-            $disponibilite = 1; 
+        $prix = floatval($_POST["prix"]);
+        
+        // Vérifiez si une catégorie a été sélectionnée
+        if(isset($_POST["id_categorie"]) && $_POST["id_categorie"] !== ""){
+            $id_categorie = htmlspecialchars($_POST["id_categorie"]);
         } else {
-            $disponibilite =  0;
-        };
+            $id_categorie = null; 
+        }
+        
+        // convertir disponibilite en boolean
+        $disponibilite = isset($_POST["disponibilite"]) ? ($_POST["disponibilite"] == "true" ? 1 : 0) : null;
+        
         insertDestination($nom, $description, $prix, $disponibilite);
+        $id_destination = $pdo->lastInsertId();
+        
+        // Insérer dans la table appartenir uniquement si une catégorie est sélectionnée
+        if ($id_categorie !== null) {
+            insertIntoAppartenir($id_destination, $id_categorie);
+        }
+
     }
     header("Location: destinations-controller.php?create=success");
 } else if($_GET["action"] == "edit"){
+    $categories = fetchCategories();
     $id_destination = htmlspecialchars($_GET["id_destination"]);
-    $destination = fetchDestinationById($id_destination);
+    $destination = fetchDestinationById($id_destination); 
     include "../../views/admin/destinations/edit.php";
-} else if($_GET["action"] == "update"){
+}    
+ // MAJ destination
+else if ($_GET["action"] == "update") {
     $id_destination = htmlspecialchars($_POST["id_destination"]);
     $nom = htmlspecialchars($_POST["nom"]);
     $description = htmlspecialchars($_POST["description"]);
     $prix = htmlspecialchars($_POST["prix"]);
-    if(htmlspecialchars($_POST["disponibilite"]) == true){
-        $disponibilite = 1;
-    } else {
-        $disponibilite = 0;
-    };
+    // Convertir disponibilite en booléen
+    $disponibilite = ($_POST["disponibilite"] === "true") ? 1 : 0;
+    $id_categorie = ($_POST["id_categorie"]);
+
     updateDestination($id_destination, $nom, $description, $prix, $disponibilite);
+    updateAppartenir($id_destination, $id_categorie);
     header("Location: destinations-controller.php?update=success");
-} else if($_GET["action"] == "confirmDelete"){
+}
+// SUPPR destination
+else if($_GET["action"] == "confirmDelete"){
     $id_destination = htmlspecialchars($_POST["id_destination"]);
     deleteDestination($id_destination);
     header("Location: destinations-controller.php?delete=success");

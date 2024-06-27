@@ -29,6 +29,7 @@
                 <th>Nom</th>
                 <th>Description</th>
                 <th>Prix</th>
+                <th>Catégorie</th>
                 <th>Actions</th>
             </tr>
             <tr>
@@ -38,13 +39,21 @@
                             echo "<td>" . htmlspecialchars($destination["nom"]) . "</td>";
                             echo "<td>" . htmlspecialchars($destination["description"]) . "</td>";
                             echo "<td>" . htmlspecialchars($destination["prix"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($destination["disponibilite"] ? 'Disponible' :'Indisponible')  . "</td>";
+                            echo "<td>";
+                            if (isset($destinationCategories[$destination['id_destination']])) {
+                                foreach ($destinationCategories[$destination['id_destination']] as $categorie) {
+                                    echo htmlspecialchars($categorie["nom"]) . "<br>";
+                                }
+                            }
+                            echo "</td>";
                             echo "<td>";
                             echo "<button onclick='redirectToEditDestination(" . htmlspecialchars($destination['id_destination']) .")'>Modifier</button>";
-                            echo "<button onclick='displayModalDeleteDestination(\"" . htmlspecialchars($destination['id_destination']) . "\");'>Supprimer avec modal</button>";
+                            echo "<button onclick='displayModalDeleteDestination(\"" . htmlspecialchars($destination['id_destination']) . "\", \"" . htmlspecialchars($destination['nom']) . "\");'>Supprimer</button>";
                             echo "</td>";
                         echo "</tr>";
                     };
+
+
                 ?>
             </tr>
         </table>
@@ -79,12 +88,12 @@
             componentToClose.style.display = "none";
             window.location.replace("../../controllers/admin/destinations-controller.php");
         }
-        function displayModalDeleteDestination(id_destination,){
+        function displayModalDeleteDestination(id_destination, nom_destination){
             const modalDeleteDestination = document.querySelector("#js-delete-modal");
             const modalDestinationId = document.querySelector("#modal-destination-id");
             const modalText = document.querySelector("#destination-id-modal");
             modalDestinationId.value = id_destination;
-            modalText.textContent = id_destination;
+            modalText.textContent = nom_destination;
             modalDeleteDestination.style.display = "block";
         }
     </script>

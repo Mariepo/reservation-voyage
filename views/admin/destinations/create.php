@@ -16,10 +16,20 @@
     </div>
 
     <div>
-            <input type="radio" name="disponibilite" id="true" value="true">
-            <label for="true">Disponible</label>
-            <input type="radio" name="disponibilite" id="false" value="false">
-            <label for="false">Non disponible</label>
+        <input type="radio" name="disponibilite" id="true" value="true">
+        <label for="true">Disponible</label>
+        <input type="radio" name="disponibilite" id="false" value="false">
+        <label for="false">Non disponible</label>
+    </div>
+
+    <div>
+        <label for="categorie">Catégorie</label>
+        <select name="id_categorie" id="categorie">
+            <option value="">Sélectionner une catégorie</option>
+            <?php foreach ($categories as $categorie): ?>
+                <option value="<?= htmlspecialchars($categorie['id_categorie']) ?>"><?= htmlspecialchars($categorie['nom']) ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
     <div>
         <input type="submit" value="Ajouter">
