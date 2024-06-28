@@ -16,13 +16,29 @@
     </div>
 
     <div>
-            <input type="radio" name="disponibilite" id="true" value="true" <?php if ($destination['disponibilite'] == 1) {echo 'checked';}?>>
+            <input type="radio" name="disponibilite" id="true"  value="true" <?php if ($destination['disponibilite'] == 1) {echo 'checked';}?>>
             <label for="true">Disponible</label>
             <input type="radio" name="disponibilite" id="false" value="false" <?php if($destination['disponibilite'] == 0) {echo 'checked';}?>>
             <label for="false">Non disponible</label>
+            <input type="radio" name="disponibilite" id="null" value="null" <?php if($destination['disponibilite'] === null) {echo 'checked';}?>>
+            <label for="null">Ne pas indiquer</label>
     </div>
+
+    <div>
+        <label for="categorie">Catégorie</label>
+        <select name="id_categorie" id="categorie">
+        <option value="">Sélectionner une catégorie</option>
+            <?php foreach ($categories as $categorie): ?>
+                <option value="<?= htmlspecialchars($categorie['id_categorie']) ?>"><?= htmlspecialchars($categorie['nom']) ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    
     <div>
         <input type="submit" value="Modifier">
+        <?php 
+        
+        ?>
     </div>
 </form>
 <div>
@@ -33,4 +49,8 @@
     function redirectToIndexDestination(){
         window.location.replace("../../controllers/admin/destinations-controller.php");
     }
+
+
+
 </script>
+
