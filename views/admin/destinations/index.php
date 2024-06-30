@@ -42,7 +42,7 @@
                             echo "<td>";
                             if (isset($destinationCategories[$destination['id_destination']])) {
                                 foreach ($destinationCategories[$destination['id_destination']] as $categorie) {
-                                    echo htmlspecialchars($categorie["nom"]) . "<br>";
+                                    echo displayCategorieName($categorie["nom"], $categorie["id_categorie"]) . "<br>";
                                 }
                             }
                             echo "</td>";
@@ -100,5 +100,14 @@
 </body>
 </html>
 
+<?php
+    function displayCategorieName($categorie_name, $id_categorie){
+        if($id_categorie == 7){
+            return "";
+        } else {
+            return htmlspecialchars($categorie_name);
+        }
+    }
+?>
 
 

@@ -45,6 +45,8 @@ else if($_GET["action"] == "create"){
     $categories = fetchCategories();
     $id_destination = htmlspecialchars($_GET["id_destination"]);
     $destination = fetchDestinationById($id_destination); 
+    $destinationCategories = []; // Initialisation de la variable
+    $destinationCategories[$id_destination] = fetchCategoriesForDestination($id_destination);
     include "../../views/admin/destinations/edit.php";
 }    
  // MAJ destination
@@ -99,3 +101,5 @@ function displayDeleteSuccessBanner(){
         echo '</div>'; 
     }
 };
+
+

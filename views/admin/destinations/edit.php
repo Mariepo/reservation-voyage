@@ -27,18 +27,18 @@
     <div>
         <label for="categorie">Catégorie</label>
         <select name="id_categorie" id="categorie">
-        <option value="">Sélectionner une catégorie</option>
             <?php foreach ($categories as $categorie): ?>
-                <option value="<?= htmlspecialchars($categorie['id_categorie']) ?>"><?= htmlspecialchars($categorie['nom']) ?></option>
+                <?php if (isCategoryInDestination($destinationCategories[$destination["id_destination"]], $categorie['nom'])): ?>
+                    <option value="<?= htmlspecialchars($categorie['id_categorie']) ?>" selected><?= htmlspecialchars($categorie['nom']) ?></option>
+                <?php else: ?>
+                    <option value="<?= htmlspecialchars($categorie['id_categorie']) ?>"><?= htmlspecialchars($categorie['nom']) ?></option>
+                <?php endif; ?>
             <?php endforeach; ?>
         </select>
     </div>
     
     <div>
         <input type="submit" value="Modifier">
-        <?php 
-        
-        ?>
     </div>
 </form>
 <div>
@@ -54,3 +54,18 @@
 
 </script>
 
+<?php
+    function isCategoryInDestination($cats, $category_name){
+        if (empty($cats)){
+            return true;
+        }
+        foreach ($cats as $cat) {
+            if ($category_name == $cat['nom']) {
+                return true;             
+            }
+        }
+        return false;
+    }; 
+
+
+?>

@@ -14,7 +14,7 @@ function fetchDestinations(){
 function fetchCategoriesForDestination($id_destination){
     global $pdo;
     $query = "
-        SELECT categorie.nom 
+        SELECT categorie.nom, categorie.id_categorie
         FROM categorie
         JOIN appartenir ON categorie.id_categorie = appartenir.id_categorie
         WHERE appartenir.id_destination = ?;
